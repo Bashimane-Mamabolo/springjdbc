@@ -8,9 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
-import static org.mockito.ArgumentMatchers.any;
+import static com.bash.springjdbc.TestDataUtil.createTestAuthor;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
@@ -30,11 +29,7 @@ public class AuthorDaoImplTests {
     @Test
     public void testThatCreateAuthorGeneratesCorrectSql() {
         // Arrange
-        Author author = Author.builder()
-                .id(1L)
-                .name("Bash")
-                .age(31)
-                .build();
+        Author author = createTestAuthor();
         // Act
         underTest.create(author);
         // Asset

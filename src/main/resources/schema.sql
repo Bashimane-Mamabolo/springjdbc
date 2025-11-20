@@ -11,7 +11,7 @@ CREATE TABLE "authors" (
 
 CREATE TABLE "books" (
     "isbn" text NOT NULL,
-    "text" text,
+    "title" text,
     "author_id" bigint,
     CONSTRAINT "books_pkey" PRIMARY KEY ("isbn"),
     CONSTRAINT "fk_author" FOREIGN KEY (author_id) REFERENCES authors(id)

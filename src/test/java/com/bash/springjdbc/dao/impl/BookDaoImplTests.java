@@ -8,9 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
-import static org.mockito.ArgumentMatchers.any;
+import static com.bash.springjdbc.TestDataUtil.createTestBook;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
@@ -26,11 +25,7 @@ public class BookDaoImplTests {
     @Test
     public void testThatCreateBookGenerateCorrectSql() {
         // Arrange (Dependencies and method parameters)
-        Book book = Book.builder()
-                .isbn("ISBN")
-                .title("Title")
-                .authorId(1L)
-                .build();
+        Book book = createTestBook();
         // Act (call the method we're testing)
         bookUnderTest.create(book);
         // Assert and verify our expected result
