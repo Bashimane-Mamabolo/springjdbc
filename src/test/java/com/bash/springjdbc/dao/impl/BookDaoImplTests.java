@@ -79,7 +79,18 @@ public class BookDaoImplTests {
                 eq(1L),
                 eq("ISBN")
         );
+    }
 
-
+    @Test
+    public void testThatDeleteGeneratesCorrectSql() {
+        // Arrange
+        Book book = createTestBook();
+        // Act
+        bookUnderTest.delete(book.getIsbn());
+        // Assert or verify
+        verify(jdbcTemplate).update(
+                eq("DELETE FROM books WHERE isbn = ?"),
+                eq("ISBN")
+        );
     }
 }
