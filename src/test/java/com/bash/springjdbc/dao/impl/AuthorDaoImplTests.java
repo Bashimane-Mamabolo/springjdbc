@@ -55,4 +55,36 @@ public class AuthorDaoImplTests {
         );
     }
 
+    @Test
+    public void testThatFindAllGeneratesCorrectSql() {
+        // Arrange
+        // Act
+        underTest.find();
+        // Assert or verify
+        verify(jdbcTemplate).query(
+                eq("SELECT id, name, age FROM authors"),
+                ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any()
+        );
+    }
+
+    @Test
+    public void testThatUpdateGeneratesCorrectSql() {
+        // Arrange
+        Author author = createTestAuthor();
+
+        // Act
+        underTest.update(author.getId(), author);
+        //Assert or verify
+        verify(jdbcTemplate).update(
+                eq("UPDATE authors SET id = ?, name = ?, age = ? WHERE id = ?"),
+                eq(1L),
+                eq("Bash"),
+                eq(31),
+                eq(1L)
+        );
+
+
+    }
+
+
 }

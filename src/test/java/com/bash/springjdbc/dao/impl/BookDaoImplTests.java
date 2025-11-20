@@ -45,9 +45,41 @@ public class BookDaoImplTests {
         // Assert or verify
         verify(jdbcTemplate).query(
               eq("SELECT isbn, title, author_id FROM books WHERE isbn = ? LIMIT 1"),
-              ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any(),
+              ArgumentMatchers.<BookDaoImpl.BookRowMapper>any(),
               eq("ISBN")
         );
+
+    }
+
+    @Test
+    public void testThatFindAllGeneratesCorrectSql() {
+        // Arrange
+        // Act
+        bookUnderTest.find();
+        // Assert or verify
+        verify(jdbcTemplate).query(
+                eq("SELECT isbn, title, author_id FROM books"),
+                ArgumentMatchers.<BookDaoImpl.BookRowMapper>any()
+        );
+    }
+
+    @Test
+    public void testThatUpdateGeneratesCorrectSql() {
+        // Arrange
+        Book book = createTestBook();
+
+        // Act
+        bookUnderTest.update(book.getIsbn(), book);
+
+        // Assert
+        verify(jdbcTemplate).update(
+                eq("UPDATE books SET isbn = ?, title = ?, author_id = ? WHERE isbn = ?"),
+                eq("ISBN"),
+                eq(book.getTitle()),
+                eq(1L),
+                eq("ISBN")
+        );
+
 
     }
 }
